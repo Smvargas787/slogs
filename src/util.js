@@ -1,8 +1,5 @@
 const colors = require('colors');
 
-// setup for file system
-const fs = require('fs');
-
 // set time stamp for logs
 const ts = new Date();
 
@@ -12,13 +9,19 @@ const seperator = colors.magenta('\n=============\n');
 exports.debug = (data) => {
   const out1 = seperator + ts + '\n \n' + data + '\n \n' + seperator;
 
-  // id debug mode equal true
+  // Log Event Streams
   if (process.env.DEBUG) {
-    fs.appendFile('logs/err.log', out1, (err) => {
-      if (err) throw err;
-    // let dev know file was sucessfully appended
-      console.log(colors.cyan('log updated sucessfully'));
-    }); // closing append file
-  } // closing if debug process
-  console.log(out1);
-}; // closing debug export
+    if (data === 'log') {
+      const log = out1;
+      console.log(log);
+    } else if (data === 'error') {
+      const error = out1;
+      console.error(error);
+    } else if (data === 'warn') {
+      const warn = out1;
+      console.warn(warn);
+    } else {
+      console.error(colors.red('Err!'));
+    }
+  }
+};
