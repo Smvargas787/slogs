@@ -1,24 +1,22 @@
-const colors = require('colors');
-
-// setup for file system
-const fs = require('fs');
-
-// set time stamp for logs
-const ts = new Date();
-
-const seperator = colors.magenta('\n=============\n');
-
-// debug method
-exports.debug = (data) => {
-  const out1 = seperator + ts + '\n \n' + data + '\n \n' + seperator;
-
-  // id debug mode equal true
-  if (process.env.DEBUG) {
-    fs.appendFile('logs/err.log', out1, (err) => {
-      if (err) throw err;
-    // let dev know file was sucessfully appended
-      console.log(colors.cyan('log updated sucessfully'));
-    }); // closing append file
-  } // closing if debug process
-  console.log(out1);
-}; // closing debug export
+// Version Number Increaser
+exports.bump = (originalVers, Update) => {
+  let major = originalVers.major;
+  let minor = originalVers.minor;
+  let patch = originalVers.patch;
+  if (Update) {
+    if (Update === 'major') {
+      major += 1;
+    }
+    if (Update === 'minor') {
+      minor += 1;
+    }
+    if (Update === 'patch') {
+      major += 1;
+      minor = 0;
+      patch = 0;
+    }
+  } else {
+    console.warn('Enter major, minor, or patch as a 2nd param');
+  }
+  console.log('New Version: ' + major + '.' + minor + '.' + patch);
+};
